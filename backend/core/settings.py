@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '<your-postgres-db-name>',
-        'USER': '<your-postgres-user>',
-        'PASSWORD': '<your-postgres-password>',
-        'HOST': '<your-postgres-host>',
-        'PORT': '<your-postgres-port>',
+        'NAME': 'djanto-test',
+        'USER': 'djanto_test_user',
+        'PASSWORD': 'rvBx7a3tuOo601IH9rfN8AsGutfh8Fm4',
+        'HOST': 'postgres://djanto_test_user:rvBx7a3tuOo601IH9rfN8AsGutfh8Fm4@dpg-comg73gcmk4c739l1cog-a/djanto_test',
+        'PORT': '5432',
     }
 }
 
