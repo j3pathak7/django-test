@@ -7,3 +7,7 @@ class TextSerializer(serializers.Serializer):
 
     def get_capitalized_text(self, obj):
         return obj['text'].upper()
+
+
+class RemoveBackgroundSerializer(serializers.Serializer):
+    image = serializers.ImageField()

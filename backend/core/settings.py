@@ -29,10 +29,11 @@ SECRET_KEY = 'django-insecure--u$*41=&)a=08xnb_x^be9pqf=*#^7wgks7r$qamqd%a9^(f(7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'django-test-n5rh.onrender.com',
-    # Add other allowed hosts if needed
-]
+# ALLOWED_HOSTS = [
+#     'django-test-n5rh.onrender.com',
+#     '127.0.0.1:8000',
+# ]
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
