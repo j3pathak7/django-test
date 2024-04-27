@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djanto-test',
+        'NAME': 'djanto_test',
         'USER': 'djanto_test_user',
         'PASSWORD': 'rvBx7a3tuOo601IH9rfN8AsGutfh8Fm4',
-        'HOST': 'postgres://djanto_test_user:rvBx7a3tuOo601IH9rfN8AsGutfh8Fm4@dpg-comg73gcmk4c739l1cog-a/djanto_test',
+        'HOST': 'dpg-comg73gcmk4c739l1cog-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
