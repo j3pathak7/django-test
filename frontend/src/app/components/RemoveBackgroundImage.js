@@ -5,6 +5,7 @@ import axios from "axios";
 const RemoveBackgroundImage = () => {
   const [image, setImage] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleImageUpload = (event) => {
     setImage(event.target.files[0]);
@@ -15,6 +16,8 @@ const RemoveBackgroundImage = () => {
 
     const formData = new FormData();
     formData.append("image", image);
+
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -31,6 +34,42 @@ const RemoveBackgroundImage = () => {
       setProcessedImage(processedImageData);
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownload = () => {
+    if (processedImage) {
+      // Convert base64 image to blob
+      const byteCharacters = atob(processedImage);
+      const byteArrays = [];
+
+      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
+
+      const blob = new Blob(byteArrays, { type: "image/png" });
+
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "processed_image.png");
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     }
   };
 
@@ -56,24 +95,38 @@ const RemoveBackgroundImage = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center space-x-4">
             <button
               type="submit"
-              disabled={!image}
+              disabled={!image || loading}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-              Remove Background
+              {loading ? "Processing..." : "Remove Background"}
             </button>
           </div>
         </form>
         {processedImage && (
-          <div className="bg-gray-200 p-4 rounded-lg">
-            <p className="text-gray-800 font-semibold">Processed Image:</p>
-            <img
-              src={`data:image/png;base64,${processedImage}`}
-              alt="Processed Image"
-              className="max-w-full h-auto"
-            />
+          <div className="bg-gray-200 p-4 rounded-lg mt-4">
+            <div className="my-8">
+              <p className="text-gray-800 font-semibold">Processed Image:</p>
+              <img
+                src={`data:image/png;base64,${processedImage}`}
+                alt="Processed Image"
+                className="max-w-full h-auto"
+              />
+            </div>
+            <div className="flex justify-center">
+              {" "}
+              {/* Container for centering */}
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={!processedImage}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Download Processed Image
+              </button>
+            </div>
           </div>
         )}
       </div>
