@@ -10,7 +10,7 @@ const CapitalizeText = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/capitalize/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/capitalize/`,
         { text }
       );
       setCapitalizedText(response.data.capitalized_text);
